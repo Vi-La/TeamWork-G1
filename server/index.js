@@ -4,6 +4,8 @@ import bodyParser from "body-parser";
 import patientRouter from "./routes/PatientRoute";
 import UserRouter from "./routes/userRouter"
 import articleRoute from "./routes/articleRouter";
+import commentRoute from "./routes/commentRoute";
+
 
 import * as globalErrorHandling from "./controllers/ErrorController"
 import AppError  from "./utils/appError"
@@ -27,6 +29,8 @@ next()
 
 app.use('/api/v3/User',UserRouter)
 app.use('/api/v3/article',articleRoute)
+app.use('/api/v3/comments',commentRoute)
+
 
 app.all('*', (req,res,next) => {
     // res.status(404).json({

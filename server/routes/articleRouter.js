@@ -8,7 +8,8 @@ const articleRoute = express.Router()
 
 articleRoute.route("/")
                    .post(articleControl.createArticle)
-                   .get(authControl.protect, articleControl.getAllArticles)
+                   .get(articleControl.getAllArticles)
+                   //.get(authControl.protect, articleControl.getAllArticles)
                 
 
 articleRoute.route('/:id')
