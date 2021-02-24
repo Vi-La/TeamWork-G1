@@ -30,13 +30,17 @@ const Schema = mongoose.Schema
         required:true,
        
     },
-    authorId:[{type: Schema.Types.ObjectId, ref: 'User' }],
+   // authorId:[{type: Schema.Types.ObjectId, ref: 'User' }],
     
 
-    comment: [{ type:Schema.Types.ObjectId, ref: 'comment' }]
+     comment: [
+         {type:Schema.Types.String, ref: 'comment' }]
+    
          
 });
 //let article = module.exports= mo.model('Article',artSchma);
 const article = mongoose.model("Article", artSchema);
 export default article;
 
+
+  
