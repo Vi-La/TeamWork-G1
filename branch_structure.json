@@ -1,0 +1,33 @@
+{
+  "default_branch": "Develop",
+  "branches": [
+    "Authentication",
+    "Develop",
+    "ErrorHandling",
+    "Removal",
+    "TutorOnPopulation",
+    "articlesorting",
+    "origin",
+    "wrap_Authentication"
+  ],
+  "parent": {
+    "Authentication": "Develop",
+    "Develop": null,
+    "ErrorHandling": "Develop",
+    "Removal": "Develop",
+    "TutorOnPopulation": "Develop",
+    "articlesorting": "Develop",
+    "origin": "Develop",
+    "wrap_Authentication": "Develop"
+  },
+  "order": [
+    "Develop",
+    "Authentication",
+    "ErrorHandling",
+    "Removal",
+    "TutorOnPopulation",
+    "articlesorting",
+    "origin",
+    "wrap_Authentication"
+  ]
+}
