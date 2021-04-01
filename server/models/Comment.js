@@ -1,8 +1,6 @@
 import mongoose from 'mongoose'
 
-
  const commentSchemma = new mongoose.Schema({
-
     comment:{
         type:String,
         maxlength:100,
@@ -17,18 +15,13 @@ import mongoose from 'mongoose'
         required:true
     },
     authorId:{
-        type:String,
-  
+        type:mongoose.Schema.ObjectId,
+        required:[true,'Comments must belong to a user']
     },
     articleId:{
-        type:String,
-        required:[true,'Please enter ArticleID']
+        type:mongoose.Schema.ObjectId,
+        required:[true,'Comments must belong to a Article']
     }
-
-
 })
-
-
 const Comment = mongoose.model('Comment',commentSchemma);
-
 export default Comment

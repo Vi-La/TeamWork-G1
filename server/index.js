@@ -5,8 +5,10 @@ import mongoSanitize from 'express-mongo-sanitize'
 import xss from 'xss-clean'
 import hpp from 'xss-clean'
 import CommentRouter from "./routes/commentRoutes"
-import articleRoute from "./routes/articleRouter";
+import articleRoute from "./routes/articleRouter"
 import UserRouter from "./routes/userRouter"
+import ReviewRouter from "./routes/reviewRoute"
+import TourRouter from "./routes/tourRoute"
 
 import * as globalErrorHandling from "./controllers/ErrorController"
 import AppError  from "./utils/appError"
@@ -51,7 +53,9 @@ next()
 
 // Route
 app.use('/api/v1/comment',CommentRouter)
+app.use('/api/v1/review',ReviewRouter)
 app.use('/api/v1/user',UserRouter)
+app.use('/api/v1/tour',TourRouter)
 app.use('/api/v1/article',articleRoute)
 
 app.all('*', (req,res,next) => {

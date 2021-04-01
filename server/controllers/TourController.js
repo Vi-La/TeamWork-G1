@@ -1,5 +1,5 @@
 import { now } from "mongoose";
-import article from "../models/Article";
+import Tour from "../models/Tour";
 import User from "../models/User";
 import catchAsync from "../utils/catchAsync"
 import comment from '../models/Comment';
@@ -13,50 +13,44 @@ const filterObj = (obj, ...allowedFields) =>{
     })
     return newObj
 }
-export const createArticle = catchAsync(async (req,res,next)=>{
-    let articleInfo= {};
-    articleInfo.title=req.body.title;
-    articleInfo.article=req.body.article;
-    articleInfo.authorId=req.user.id;
-    articleInfo.authorInfo=req.user.id;
-    const name=req.user.firstName+" "+req.user.lastName
-    articleInfo.author=name;
-    
-  
-    const newArticle = await article.create(articleInfo);
+export const createTour = catchAsync(async (req,res,next)=>{
+    let tourInfo= {};
+
+
+    tourInfo.name=req.body.name;
+    tourInfo.description=req.body.description;
+    tourInfo.startLocation=req.body.startLocation;
+    tourInfo.locations=req.body.locations;
+    tourInfo.authorId=req.user.id;
+    tourInfo.guides=req.body.guides;
+        console.log(tourInfo)
+        const author=req.user.firstName+" "+req.user.lastName
+    tourInfo.author=author;
+    const newTour = await Tour.create(tourInfo);
     res.status(201).json({
         status:"success",
-        newArticle
+        newTour
             })
         })
 
-    export const getArticle = catchAsync(async(req,res,next)=>{
-        let newObj ={}
-        //  const comments = await comment.find({articleId:req.params.id})
-        const Article = await article.findById(req.params.id)
-        .populate({
-            path: 'comments',
-            select: 'comment'})
+    export const getTour = catchAsync(async(req,res,next)=>{
+        // const comments = await comment.find({articleId:req.params.id})
+        const tours= await Tour.findById(req.params.id).populate('review')
       
-  
-        
         // const user = await User.find({_id:{$in:Article.guides}})
-        if(!Article) {
+        if(!tours) {
             return next( new AppError("No article found with that ID",404))
         }
                 res.status(200).json({
                     status : 'success',
                     data: {
-                        Article ,
-                        // comments
-                        
-                        
+                        tours
                     }
             })
         })
 
     //Update controll function
-    export const updateArticle = catchAsync(async (req,res,next)=>{
+    export const updateTour = catchAsync(async (req,res,next)=>{
         //1. Create error if user POSTs password data
  
    let _id = {_id:req.params.id}
@@ -83,7 +77,7 @@ export const createArticle = catchAsync(async (req,res,next)=>{
 })
 
       //Delete controll function
-      export const deleteArticle = catchAsync(async (req, res, next) => {
+      export const deleteTour= catchAsync(async (req, res, next) => {
     
         let query = {_id:req.params.id}
         const articleDeleted= await article.findByIdAndDelete(query)
@@ -99,13 +93,15 @@ export const createArticle = catchAsync(async (req,res,next)=>{
     })
     
           //Get All controll function
-    export const getAllArticles = catchAsync(async (req,res,next) => {
-        const articles = await article.find({})
+    export const getAllTour = catchAsync(async (req,res,next) => {
+        console.log("===========")
+        const allTours = await Tour.find({})
+        console.log(allTours,"===========")
         res.status(200).json({
             status:"success", 
-            results: articles.length,
+            results: allTours.length,
             data:{
-                articles
+                allTours
             }
     
         })

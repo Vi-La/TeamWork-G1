@@ -1,6 +1,7 @@
 import crypto from'crypto'
 import {promisify}from 'util'
 import User from "../models/User"
+import article from "../models/Article";
 import catchAsync from "../utils/catchAsync"
 import jwt from 'jsonwebtoken'
 import AppError from '../utils/appError'
@@ -97,10 +98,11 @@ export const protect = catchAsync(async (req, res, next)=> {
 
     next();
 })   
-exports.restrictTo = (...roles) =>{
-    return (req, res, next) => {
+exports.restrictTo =(...roles) =>{
+    return async (req, res, next) => {
         //roles ['admin', developer].role='user'
-        if(!roles.includes(req.user.jobRole)){
+        const Article = await article.findById(req.params.id)
+        if(!(roles.includes(req.user.jobRole)||req.user.id === Article.authorId)){
             return next(
                 new AppError('You do not have permission to perform this action', 403)
             )
@@ -200,7 +202,7 @@ export const updatePassword = catchAsync(async (req, res, next) =>{
     user.password =newPassword
     user.passwordConfirm = passwordConfirm
     user.passwordResetToken= undefined
-
+ 
     await user.save()
     // why we cannot use ..findByIdAndUpdate.
     //user.findByIdAndUpdate will not work as intended
