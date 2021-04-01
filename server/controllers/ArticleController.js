@@ -1,5 +1,6 @@
 import { now } from "mongoose";
 import article from "../models/Article";
+import User from "../models/User";
 import catchAsync from "../utils/catchAsync"
 import comment from '../models/Comment';
 import AppError from "../utils/appError";
@@ -17,7 +18,7 @@ export const createArticle = catchAsync(async (req,res,next)=>{
     articleInfo.title=req.body.title;
     articleInfo.article=req.body.article;
     articleInfo.authorId=req.user.id;
-    articleInfo.createdAt=new Date().toISOString();
+    articleInfo.authorInfo=req.user.id;
     const name=req.user.firstName+" "+req.user.lastName
     articleInfo.author=name;
     
@@ -30,16 +31,26 @@ export const createArticle = catchAsync(async (req,res,next)=>{
         })
 
     export const getArticle = catchAsync(async(req,res,next)=>{
-        const comments = await comment.find({articleId:req.params.id})
+        let newObj ={}
+        //  const comments = await comment.find({articleId:req.params.id})
         const Article = await article.findById(req.params.id)
+        .populate({
+            path: 'comments',
+            select: 'comment'})
+      
+  
+        
+        // const user = await User.find({_id:{$in:Article.guides}})
         if(!Article) {
             return next( new AppError("No article found with that ID",404))
         }
                 res.status(200).json({
                     status : 'success',
                     data: {
-                        Article,
-                        comments
+                        Article ,
+                        // comments
+                        
+                        
                     }
             })
         })
@@ -50,7 +61,7 @@ export const createArticle = catchAsync(async (req,res,next)=>{
  
    let _id = {_id:req.params.id}
     //2. Filtered out unwanted fields namenot allowed to be updated
-   const filterBody = filterObj(req.body, 'title','article')
+   const filterBody = filterObj(req.body, 'title','article','guides')
     //3. If not update user docunent
     const articles = await article.findByIdAndUpdate(_id, filterBody, {
         new:true,

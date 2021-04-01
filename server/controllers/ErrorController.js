@@ -24,7 +24,6 @@ const handleCastErrorDB = err => {
     return new AppError(message, 400)
 }
 
-
 const sendErrorForDev = (err,res) => { 
 
     res.status(err.statusCode).json({
@@ -48,13 +47,12 @@ const sendErrorForProd = (err,res) => {
         res.status(500).json({
             status:'error',
             message:'Somethng went very wrong!'
-
         })
     }
   }
 
 export const  globalErrorHandling = (err,req,res,next) => { 
-    
+      console.log(err.stack)
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error'
    

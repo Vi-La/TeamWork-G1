@@ -13,7 +13,7 @@ articleRoute.route("/")
 
 articleRoute.route('/:id')
                    .delete(authControl.protect ,
-                    authControl.restrictTo('admin', 'developer'),
+                    authControl.restrictTo('admin'),
                     articleControl.deleteArticle)
                    .patch(authControl.protect, articleControl.updateArticle)
                    .get(authControl.protect,  articleControl.getArticle)
