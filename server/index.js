@@ -54,6 +54,7 @@ app.use('/api/v1/comment',CommentRouter)
 app.use('/api/v1/user',UserRouter)
 app.use('/api/v1/article',articleRoute)
 
+
 app.all('*', (req,res,next) => {
     next(new AppError(`Can't find ${req.originalUrl} on this server`, 404))
 })
