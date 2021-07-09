@@ -57,11 +57,11 @@ export const  globalErrorHandling = (err,req,res,next) => {
     
     err.statusCode = err.statusCode || 500;
     err.status = err.status || 'error'
-   
+    console.log("Can u here handle")
     const environment = process.env.NODE_ENV
  
     if(environment ==='development'){
-        console.log(environment)
+        console.log('enere me nowvironment')
         sendErrorForDev(err, res)
     }
     

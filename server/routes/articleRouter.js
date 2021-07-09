@@ -1,6 +1,5 @@
 import express from "express";
-import * as articleControl from "../controllers/articleController";
-import article from "../models/Article";
+import * as articleControl from "../controllers/ArticleController";
 import * as authControl from "../controllers/AuthController"
 
 
